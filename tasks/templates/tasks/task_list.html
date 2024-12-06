@@ -6,38 +6,384 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <style>
+        /* Styling for the popup overlay */
 
-<body>
+
+        /* Styling for clickable tasks */
+        * {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .task-clickable {
+            flex-grow: 1;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .task-clickable:hover {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        /* Completed task styling */
+        .completed-task {
+            text-decoration: none;
+            color: #1b74c2;
+        }
+
+        /* Circular checkbox */
+        .form-check-input {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .bg-open {
+            background-color: #a47ce0 !important;
+        }
+
+        .bg-success {
+            background-color: #4fc02d !important;
+            color: #000000;
+
+
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg-color: #f8f9fa;
+            --btn-bg-color: #007bff;
+            --btn-text-color: #ffffff;
+            --task-bg-color: #ffffff;
+            --task-text-color: #000000;
+            --task-border-color: #dddddd;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1e1e1e;
+            --btn-bg-color: #333333;
+            --btn-text-color: #e0e0e0;
+            --task-bg-color: #1e1e1e;
+            --task-text-color: #e0e0e0;
+            --task-border-color: #444444;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+        }
+
+        .btn {
+            background-color: var(--btn-bg-color);
+            color: var(--btn-text-color);
+        }
+
+
+        .task-list {
+            background-color: var(--task-bg-color);
+            color: var(--task-text-color);
+            border: 2.5px solid var(--task-border-color);
+            border-radius: 25px;
+            padding: 1rem;
+            margin-bottom: 5rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .task-item {
+            background-color: var(--task-bg-color);
+            color: var(--task-text-color);
+            border-bottom: 1px solid var(--task-border-color);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-item .form-check-input {
+            border-color: var(--task-border-color);
+        }
+
+        .task-item.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .edit_button {
+            background-color: #007bff;
+            text-decoration: none !important;
+            /* Remove underline */
+            cursor: pointer;
+            margin-left: 1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            color: var(--btn-text-color);
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 5px;
+            position: absolute;
+            right: 15rem;
+        }
+
+        .timestamp {
+            font-weight: bold;
+            font-size: 0.8rem;
+            position: absolute;
+            right: 22.5rem;
+            opacity: 0.7;
+
+        }
+
+        .main_title {
+            position: absolute;
+            left: 8rem;
+            padding-top: 0.75rem;
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+        .theme_btn{
+            position: absolute;
+            right: 10rem;
+            top: 1.5rem;
+            border-radius: 50px;
+            background-color: #5a5a5a;
+        }
+        .quick_link1{
+            position: absolute;
+            right: 10rem;
+            top: 1.5rem;
+            padding: 0.5rem 1rem;
+            margin-right: 12rem;
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+        .quick_link2
+        {
+            position: absolute;
+            right: 10rem;
+            top: 1.5rem;
+            padding: 0.5rem 1rem;
+            margin-right: 4rem;
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<header
+    style="position: fixed; width: 100%;height: 5rem ; z-index: 100; background: rgba(80, 80, 80, 0.5); backdrop-filter: blur(10px);top: 0;">
+    <h1 class="main_title text-center mb-4" style="font-weight : Bold; transition: color 0.3s ease;">TurboTasks</h1>
+    <a class="quick_link1" href="http://127.0.0.1:8000/admin/">Admin Panel</a>
+    <a class="quick_link2" href="C:\Users\Vidul\Documents\Me.Code\todolist_project\tasks\templates\tasks\docs.html">Documentation</a>
+
+    <button id="dark-mode-toggle" class="theme_btn btn btn-secondary">
+        <span id="dark-mode-icon">🌙</span>
+    </button>
+</header>
+
+<body style="padding-top: 5rem;">
     <div class="container mt-5">
-        <h1 class="text-center mb-4">My To-Do List</h1>
+
+
 
         <!-- Add Task Form -->
         <form method="POST" action="{% url 'task_add' %}" class="mb-4">
             {% csrf_token %}
             <div class="input-group">
                 <input type="text" name="title" class="form-control" placeholder="New Task" required>
-                <button class="btn btn-primary" type="submit">Add Task</button>
+                <button class="btn btn-primary" type="submit" style="border: rgb(122, 122, 122,0.5);">Add Task</button>
             </div>
         </form>
 
-        <!-- Active Tasks Section -->
-        <h2>Active Tasks</h2>
-        <ul class="list-group">
-            {% for task in active_tasks %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+        <h2 style="font-weight: bold;">Tasks</h2>
+
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task-item {% if task.completed %}completed{% endif %}">
                 <form method="POST" action="{% url 'toggle_task_complete' task.id %}" style="margin: 0;">
                     {% csrf_token %}
-                    <input type="checkbox" class="form-check-input me-2" onchange="this.form.submit()">
-                    {% if task.completed %}checked{% endif %}
-                    {{ task.title }}
+                    <input type="checkbox" class="form-check-input me-2" onchange="this.form.submit()" {% if task.completed %}checked{% endif %}>
+                    <span class="task-title">{{ task.title }}</span>
                 </form>
-            </li>
+                <p class="timestamp"><small>Created on: {{ task.created_at|date:"l, F j, Y, H:i" }}</small></p>
+                <span class="badge rounded-pill {% if task.completed %}bg-success{% else %}bg-open{% endif %}">
+                    {% if task.completed %}Completed{% else %}Open{% endif %}
+                </span>
+
+                <a href="{% url 'edit_task' task.id %}" class="edit_button">Edit</a>
+            </div>
             {% empty %}
-            <p>No active tasks available.</p>
+            <p>No tasks available.</p>
             {% endfor %}
-        </ul>
+
+
+            <script>
+                // Function to toggle task completion status via AJAX
+                function toggleTaskStatus(taskId, checkboxElement) {
+                    const isCompleted = checkboxElement.checked;  // Get the checked status of the checkbox
+                    const statusPill = document.getElementById('status-pill-' + taskId);  // Get the status pill element
+
+                    // Send an AJAX request to update the task status on the server
+                    fetch(`/toggle/${taskId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        body: JSON.stringify({ completed: isCompleted })  // Send the updated status
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update the status pill dynamically based on the response
+                            if (data.completed) {
+                                statusPill.classList.remove('bg-purple');
+                                statusPill.classList.add('bg-success');
+                                statusPill.textContent = 'Completed';
+                            } else {
+                                statusPill.classList.remove('bg-success');
+                                statusPill.classList.add('bg-purple');
+                                statusPill.textContent = 'Open';
+                            }
+                        })
+                        .catch(error => console.error('Error updating task status:', error));
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const toggleButton = document.getElementById("dark-mode-toggle");
+                    const darkModeIcon = document.getElementById("dark-mode-icon");
+                    const body = document.body;
+
+                    if (localStorage.getItem("darkMode") === "enabled") {
+                        body.classList.add("dark-mode");
+                        darkModeIcon.textContent = "☀️";
+                    }
+
+                    toggleButton.addEventListener("click", function () {
+                        body.classList.toggle("dark-mode");
+                        const darkModeEnabled = body.classList.contains("dark-mode");
+                        localStorage.setItem("darkMode", darkModeEnabled ? "enabled" : "disabled");
+                        darkModeIcon.textContent = darkModeEnabled ? "☀️" : "🌙";
+                    });
+                });
+
+            </script>
+
+        </div>
+
     </div>
+
+    <!-- Popup Overlay for Editing Task -->
+
+
+
+    <script>
+        // Show the task edit popup
+        function openEditOverlay(taskId, taskTitle) {
+            // Set the current task title in the input field
+            document.getElementById('editTaskTitle').value = taskTitle;
+            document.getElementById('editTaskForm').action = `/update_ajax/${taskId}/`;
+
+            // Show the popup
+            document.getElementById('taskDetailsPopup').style.display = 'flex';
+        }
+
+        // Close the task edit popup
+        function closeTaskDetails() {
+            document.getElementById('taskDetailsPopup').style.display = 'none';
+        }
+
+        // Handle form submission for editing task
+        document.getElementById('editTaskForm').onsubmit = function (event) {
+            event.preventDefault();  // Prevent default form submission
+
+            const taskId = document.getElementById('editTaskForm').action.split('/')[2];  // Extract task ID from action URL
+            const newTitle = document.getElementById('editTaskTitle').value;  // Get the updated title from the input
+
+            // Get CSRF token from the form
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+
+            // Perform the AJAX request
+            // JavaScript for handling task deletion via AJAX
+            function deleteTask(taskId) {
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                // Make the POST request to the delete view
+                fetch(`/delete_ajax/${taskId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken  // Include CSRF token in headers
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the task item from the DOM
+                            const taskItem = document.querySelector(`.task-clickable[data-id="${taskId}"]`);
+                            taskItem.remove();  // Remove task from the list
+                        } else {
+                            alert('Error deleting task');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error:', err);
+                        alert('An error occurred: ' + err);
+                    });
+            }
+
+
+            fetch(`/update_ajax/${taskId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken  // CSRF token for security
+                },
+                body: `title=${newTitle}`  // Sending the new title as form data
+            })
+                .then(response => response.json())  // Expecting a JSON response
+                .then(data => {
+                    if (data.success) {
+                        // Update the task title in the list
+                        const taskItem = document.querySelector(`.task-clickable[data-id="${taskId}"]`);
+                        taskItem.textContent = newTitle;  // Update the title in the list
+
+                        // Close the popup (you can modify this if needed)
+                        closeTaskDetails();
+                    } else {
+                        alert('Error updating task');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    alert('An error occurred: ' + err);  // Show an error alert if the request fails
+                });
+        };
+
+
+
+    </script>
 </body>
 
 </html>

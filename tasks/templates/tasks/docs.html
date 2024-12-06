@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TurboTasks Documentation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+
+        .section-header {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="padding-top: 1.5rem;">TurboTasks Task Manager Application Documentation</h1>
+
+        <p>The <strong>TurboTasks</strong> is a simple, yet powerful task management system built using
+            Django. It allows users to add, edit, view, mark tasks as completed, and delete tasks. The app provides a
+            user-friendly interface with interactive features such as dynamically updating task status, date and time
+            creation, and the ability to filter tasks based on their completion status.</p>
+
+        <p>This documentation will cover the installation, configuration, features, and usage of the application, along
+            with information on how to contribute to its development.</p>
+
+        <div class="section-header">
+            <h2>Table of Contents</h2>
+        </div>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#configuration">Configuration</a></li>
+            <li><a href="#running-the-application">Running the Application</a></li>
+            <li><a href="#features-overview">Features Overview</a></li>
+            <ul>
+                <li><a href="#task-management">Task Management</a></li>
+                <li><a href="#task-completion">Task Completion</a></li>
+                <li><a href="#task-editing">Task Editing</a></li>
+                <li><a href="#task-deletion">Task Deletion</a></li>
+                <li><a href="#task-status">Task Status</a></li>
+            </ul>
+            <li><a href="#testing">Testing</a></li>
+            <li><a href="#contributing">Contributing</a></li>
+            <li><a href="#license">License</a></li>
+        </ul>
+
+        <div class="section-header">
+            <h2 id="features">Features</h2>
+        </div>
+        <ul>
+            <li><strong>Add Tasks</strong>: Users can add new tasks with a title and description.</li>
+            <li><strong>View Tasks</strong>: Users can view all tasks along with their creation date and status.</li>
+            <li><strong>Edit Tasks</strong>: Users can edit the title and description of an existing task.</li>
+            <li><strong>Mark as Completed</strong>: Users can mark tasks as completed using a circular checkbox.
+                Completed tasks are visually differentiated.</li>
+            <li><strong>Task Status</strong>: Each task displays its current status, with a dynamically updating status
+                pill that changes color based on completion.</li>
+            <li><strong>Responsive UI</strong>: The app is built to be mobile-responsive and user-friendly.</li>
+        </ul>
+
+        <div class="section-header">
+            <h2 id="installation">Installation</h2>
+        </div>
+
+        <div class="section-header">
+            <h3>Prerequisites</h3>
+        </div>
+        <p>To use this app, you need the following:</p>
+        <ul>
+            <li>Python 3.x</li>
+            <li>Django 4.x</li>
+            <li>SQLite (default database) or any other relational database (e.g., PostgreSQL, MySQL)</li>
+            <li>Git (optional for version control)</li>
+        </ul>
+
+        <div class="section-header">
+            <h3>Step-by-Step Installation</h3>
+        </div>
+        <ol>
+            <li><strong>Clone the Repository</strong> (if using Git):
+                <pre>git clone https://github.com/yourusername/task-manager.git
+cd task-manager</pre>
+            </li>
+            <li><strong>Create a Virtual Environment</strong> (Optional but recommended):
+                <pre>python3 -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`</pre>
+            </li>
+            <li><strong>Install Dependencies</strong>: Install the necessary Python packages listed in
+                `requirements.txt`:
+                <pre>pip install -r requirements.txt</pre>
+            </li>
+            <li><strong>Set Up Database</strong>: Run the following command to apply migrations and set up the database:
+                <pre>python manage.py migrate</pre>
+            </li>
+            <li><strong>Create a Superuser</strong> (for admin access):
+                <pre>python manage.py createsuperuser</pre>
+                Follow the prompts to create an admin user.
+            </li>
+        </ol>
+
+        <div class="section-header">
+            <h2 id="configuration">Configuration</h2>
+        </div>
+
+        <ul>
+            <li><strong>Database Configuration</strong>: By default, the app uses SQLite. For production, you can
+                configure other databases such as PostgreSQL or MySQL by modifying the `DATABASES` setting in
+                `settings.py`.</li>
+            <li><strong>Static and Media Files</strong>: Static and media files are configured to be served during
+                development. For production, make sure to set up a static file server (e.g., Nginx or a cloud service
+                like AWS S3).</li>
+        </ul>
+
+        <div class="section-header">
+            <h2 id="running-the-application">Running the Application</h2>
+        </div>
+        <ol>
+            <li><strong>Start the Development Server</strong>:
+                <pre>python manage.py runserver</pre>
+            </li>
+            <li><strong>Access the Application</strong>: Open your web browser and navigate to:
+                <pre>http://127.0.0.1:8000</pre>
+            </li>
+            <li><strong>Admin Interface</strong>: Access the Django admin interface at:
+                <pre>http://127.0.0.1:8000/admin</pre>
+                Log in with the superuser credentials you created earlier.
+            </li>
+        </ol>
+
+        <div class="section-header">
+            <h2 id="features-overview">Features Overview</h2>
+        </div>
+
+        <div class="section-header">
+            <h3 id="task-management">Task Management</h3>
+        </div>
+        <ul>
+            <li><strong>Adding a Task</strong>: The user can add a task by clicking the "Add Task" button. A form will
+                appear where they can provide the task title and description.</li>
+            <li><strong>Viewing Tasks</strong>: All tasks are displayed in a list with their title, creation date, and
+                status.</li>
+        </ul>
+
+        <div class="section-header">
+            <h3 id="task-completion">Task Completion</h3>
+        </div>
+        <ul>
+            <li><strong>Mark as Completed</strong>: A circular checkbox appears next to each task. When clicked, it
+                marks the task as completed and the task is visually updated (e.g., a strikethrough on the title and a
+                change in the task's status pill color).</li>
+            <li><strong>Completed Tasks</strong>: Display a light green pill with the text "Completed" next to the task.
+            </li>
+            <li><strong>Open Tasks</strong>: Display a light purple pill with the text "Open".</li>
+        </ul>
+
+        <div class="section-header">
+            <h3 id="task-editing">Task Editing</h3>
+        </div>
+        <ul>
+            <li><strong>Edit Task</strong>: Tasks can be edited by clicking the "Edit" button next to a task. This opens
+                the task details in a form, allowing the user to update the task's title and description.</li>
+        </ul>
+
+        <div class="section-header">
+            <h3 id="task-deletion">Task Deletion</h3>
+        </div>
+        <ul>
+            <li><strong>Delete Task</strong>: Tasks can be deleted using the "Delete" button. Once deleted, the task is
+                removed from the task list.</li>
+        </ul>
+
+        <div class="section-header">
+            <h3 id="task-status">Task Status</h3>
+        </div>
+        <ul>
+            <li><strong>Status Pill</strong>: Each task displays a pill indicating its status: open or completed. The
+                pill color changes dynamically when the task is marked as completed.</li>
+        </ul>
+
+        <div class="section-header">
+            <h2 id="testing">Testing</h2>
+        </div>
+        <p>This application includes comprehensive unit and integration tests to ensure its functionality. The tests
+            cover models, views, task creation, editing, deletion, and task status updates.</p>
+        <div class="section-header">
+            <h3>Running Tests</h3>
+        </div>
+        <p>To run the tests, execute the following command:</p>
+        <pre>python manage.py test tasks</pre>
+
+        <div class="section-header">
+            <h2 id="contributing">Contributing</h2>
+        </div>
+        <p>We welcome contributions to improve the Task Manager application! If you'd like to contribute, please follow
+            these steps:</p>
+        <ol>
+            <li><strong>Fork the Repository</strong>: Fork this repository to your GitHub account.</li>
+            <li><strong>Create a Branch</strong>: Create a new branch for your feature or fix.
+                <pre>git checkout -b my-feature</pre>
+            </li>
+            <li><strong>Make Changes</strong>: Implement your feature or fix.</li>
+            <li><strong>Commit Changes</strong>:
+                <pre>git commit -m "Description of my feature/fix"</pre>
+            </li>
+            <li><strong>Push Changes</strong>:
+                <pre>git push origin my-feature</pre>
+            </li>
+            <li><strong>Create a Pull Request</strong>: Open a pull request on the main repository.</li>
+        </ol>
+
+        <div class="section-header">
+            <h2 id="license">License</h2>
+        </div>
+        <p>This project is Unlicensed - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+
+        <div class="section-header">
+            <h2>Conclusion</h2>
+        </div>
+        <p>This documentation provides all the necessary information to understand, set up, and contribute to the Task
+            Manager Application. The app offers a clean and simple user experience for task management with modern
+            features like status indicators, AJAX updates, and responsive design.</p>
+        <p>If you encounter any issues or need further assistance, feel free to open an issue in the repository or
+            contribute improvements!</p>
+    </div>
+</body>
+
+</html>

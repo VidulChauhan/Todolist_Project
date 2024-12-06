@@ -53,10 +53,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'todolist_project.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # This tells Django to look for templates in the base templates directory
+            BASE_DIR / 'templates',
+        ],
+        # This allows Django to look for templates inside the 'templates' folder of each app
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +73,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'todolist_project.wsgi.application'
 
@@ -107,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
