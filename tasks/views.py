@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Task
 from django.views.decorators.csrf import csrf_exempt
-
+from django.middleware.csrf import get_token
 
 def task_list(request):
     # Ordering tasks by creation date (newest first)
@@ -76,3 +76,6 @@ def toggle_task_status(request, task_id):
         return JsonResponse({'completed': task.completed})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+    
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})

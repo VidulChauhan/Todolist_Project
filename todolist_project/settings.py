@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-e^_n+x#0yam&mgmw@y=&&z$w3n%jb@gtyqf%_1ane%ye_k)zxe
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ideapad-pro"]
 
 
 # Application definition
