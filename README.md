@@ -1,5 +1,3 @@
-   TurboTasks Documentation  body { padding: 20px; font-family: Arial, sans-serif; } h1, h2 { color: #2c3e50; } .section-header { background-color: #f1f1f1; padding: 10px; margin-top: 30px; border-radius: 5px; } pre { background-color: #f8f9fa; padding: 10px; border-radius: 5px; } /\* Smooth scrolling \*/ html { scroll-behavior: smooth; }
-
 TurboTasks Task Manager Application Documentation
 =================================================
 
